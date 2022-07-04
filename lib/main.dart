@@ -30,35 +30,7 @@ class MyApp extends StatelessWidget {
       ),
       // calling router class for moving page
       onGenerateRoute: (setttings) => generateRoute(setttings),
-      home: Scaffold(
-        // adding app bar
-        appBar: AppBar(
-          title: const Text('hello.'),
-        ),
-        body: Column(
-          children: [
-            const Center(
-              child: Text(
-                'datas',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 50.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            // Convern elevatedButton to builder for button click
-            Builder(builder: (context) {
-              return ElevatedButton(
-                  onPressed: () {
-                    // when click the button then move to auth screen
-                    Navigator.pushNamed(context, AuthScreen.routeName);
-                  },
-                  child: const Text('Click'));
-            })
-          ],
-        ),
-      ),
+      home: const AuthScreen(),
     );
   }
 }
