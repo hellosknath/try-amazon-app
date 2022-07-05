@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
-  
+
   final String hintTxt;
-  const CustomTextField({Key? key, required this.controller, required this.hintTxt}) : super(key: key);
+  const CustomTextField(
+      {Key? key, required this.controller, required this.hintTxt})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +19,16 @@ class CustomTextField extends StatelessWidget {
             color: Colors.black38,
           ),
         ),
-        enabledBorder:const OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.black38,
           ),
         ),
       ),
       validator: (val) {
+        if (val == null || val.isEmpty) {
+          return 'Please enter your $hintTxt';
+        }
         return null;
       },
     );

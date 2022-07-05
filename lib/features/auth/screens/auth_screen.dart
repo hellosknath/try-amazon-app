@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:try_amazon_app/common/widget/custom_button.dart';
 import 'package:try_amazon_app/common/widget/custom_textfield.dart';
 import 'package:try_amazon_app/constants/global_variable.dart';
+import 'package:try_amazon_app/features/auth/services/auth_service.dart';
 
 // signin and sign up value. track of radio button
 enum Auth {
@@ -20,6 +21,8 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  // calling auth service object
+  final AuthService authService = AuthService();
   // set radio button default value
   Auth _auth = Auth.signup;
   // this is use for form validations
@@ -39,6 +42,25 @@ class _AuthScreenState extends State<AuthScreen> {
     super.dispose();
   }
 
+  // sign up methods controller manage user input
+  void signUpUser() {
+    authService.signUpUser(
+      context: context,
+      email: _emailController.text,
+      password: _passwordController.text,
+      name: _nameController.text,
+    );
+  }
+
+  // sign in user
+  void signInUser() {
+    authService.signInUser(
+      context: context,
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +70,7 @@ class _AuthScreenState extends State<AuthScreen> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            // app bar text start in left corner
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
@@ -100,18 +123,24 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                         const SizedBox(height: 10),
                         CustomTextField(
-                          controller: _nameController,
+                          controller: _emailController,
                           hintTxt: "Email",
                         ),
                         const SizedBox(height: 10),
                         CustomTextField(
-                          controller: _nameController,
+                          controller: _passwordController,
                           hintTxt: "Password",
                         ),
                         const SizedBox(height: 10),
                         CustomButton(
                           text: 'Sign Up',
-                          onTap: () {},
+                          onTap: () {
+                            // validating user input. empty or null
+                            if (_signUpFormKey.currentState!.validate()) {
+                              // calling rest api
+                              signUpUser();
+                            }
+                          },
                         ),
                       ],
                     ),
@@ -155,18 +184,22 @@ class _AuthScreenState extends State<AuthScreen> {
                       children: [
                         // calling custon text field with controller param
                         CustomTextField(
-                          controller: _nameController,
+                          controller: _emailController,
                           hintTxt: "Email",
                         ),
                         const SizedBox(height: 10),
                         CustomTextField(
-                          controller: _nameController,
+                          controller: _passwordController,
                           hintTxt: "Password",
                         ),
                         const SizedBox(height: 10),
                         CustomButton(
                           text: 'Sign In',
-                          onTap: () {},
+                          onTap: () {
+                            if (_signInFormKey.currentState!.validate()) {
+                              signInUser();
+                            }
+                          },
                         ),
                       ],
                     ),

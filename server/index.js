@@ -1,7 +1,25 @@
-const express = require('express');
+const express = require("express");
+const mongoose = require("mongoose");
+// import from others file
+const authRouter = require("./route/auth");
 const PORT = 3000;
 const app = express();
+const DB = "mongodb+srv://srinath:cox.srinath@cluster0.bmuct.mongodb.net/?retryWrites=true&w=majority";
 
-app.listen(PORT,"0.0.0.0", () => {
+// destructure property solve
+app.use(express.json());
+// middleware
+app.use(authRouter);
+
+
+// connection database
+mongoose.connect(DB).then(() => {
+    console.log("Database connected successfully");
+}).catch((e) => {
+    console.log(e);
+});
+
+
+app.listen(PORT, "0.0.0.0", () => {
     console.log(`Connected at port t ${PORT}`);
 });
