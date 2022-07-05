@@ -5,6 +5,7 @@ const bcryptjs = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 // import user 
 const User = require("../models/user");
+const auth = require('../middlewares/auth');
 
 const authRouter = express.Router();
 
@@ -69,10 +70,38 @@ authRouter.post("/api/signin", async (req, res) => {
         // return user data. ...user._doc... it's return all user info
         res.json({ token, ...user._doc });
 
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
     }
-}); 
+});
+
+
+// token validation
+authRouter.post("/tokenIsValid", async (req, res) => {
+    try {
+        // checking token exist or null
+        const token = req.header('x-auth-token');
+        if (!token) return res.json(false);
+
+        const verified = jwt.verify(token, "passwordKey");
+        if (!verified) return res.json(false);
+
+        const user = await User.findById(verified.id);
+        if (!user) return res.json(false);
+
+        // everything is ok then return true
+        res.json(true);
+
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
+// get user data
+authRouter.get("/", auth, async (req, res) => {
+    const user = await User.findById(req.user);
+    res.json({ ...user._doc, token: req.token });
+});
 
 // export authRouter for access outside of the class
 module.exports = authRouter;

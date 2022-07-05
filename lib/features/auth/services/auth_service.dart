@@ -37,7 +37,7 @@ class AuthService {
       http.Response response = await http.post(Uri.parse('$uri/api/signup'),
           body: user.toJson(),
           headers: <String, String>{
-            'content-type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json; charset=UTF-8',
           });
 
       // calling error handling func, showing api return status in snackbar
@@ -78,7 +78,7 @@ class AuthService {
             },
           ),
           headers: <String, String>{
-            'content-type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json; charset=UTF-8',
           });
 
       // calling error handling func, showing api return status in snackbar
@@ -104,6 +104,54 @@ class AuthService {
           );
         },
       );
+    } catch (e) {
+      showSnackBar(
+        context,
+        e.toString(),
+      );
+    }
+  }
+
+  // get user data
+  void getUserData(
+    BuildContext context,
+  ) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('x-auth-token');
+
+      if (token == null) {
+        prefs.setString('x-auth-token', '');
+      }
+
+      // calling token verify api
+      var tokenRes = await http.post(
+        Uri.parse(
+          '$uri/tokenIsValid',
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': token!
+        },
+      );
+
+      // convert response to body
+      var response = jsonDecode(tokenRes.body);
+
+      if (response == true) {
+        // get the user data
+        http.Response userRes = await http.get(
+          Uri.parse('$uri/'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          },
+        );
+
+        // set data to provider
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.setUser(userRes.body);
+      }
     } catch (e) {
       showSnackBar(
         context,
