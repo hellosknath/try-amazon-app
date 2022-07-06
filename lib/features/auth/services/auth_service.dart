@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:try_amazon_app/common/widget/bottom_bar.dart';
 import 'package:try_amazon_app/constants/error_handling.dart';
 import 'package:try_amazon_app/constants/global_variable.dart';
 import 'package:try_amazon_app/constants/utils.dart';
@@ -99,7 +100,7 @@ class AuthService {
           // move user to home screen if token saved
           Navigator.pushNamedAndRemoveUntil(
             context,
-            HomeScreen.routeName,
+            BottomBar.routeName,
             (route) => false,
           );
         },

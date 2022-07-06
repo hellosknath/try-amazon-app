@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:try_amazon_app/common/widget/bottom_bar.dart';
 import 'package:try_amazon_app/constants/global_variable.dart';
 import 'package:try_amazon_app/features/auth/screens/auth_screen.dart';
 import 'package:try_amazon_app/features/auth/services/auth_service.dart';
-import 'package:try_amazon_app/home/screens/home_screen.dart';
 import 'package:try_amazon_app/provider/user_provider.dart';
 import 'package:try_amazon_app/router.dart';
 
@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: (setttings) => generateRoute(setttings),
       // checking token. if token is exist then move home screen, otherwise authScreen
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const HomeScreen()
+          ? const BottomBar()
           : const AuthScreen(),
     );
   }
