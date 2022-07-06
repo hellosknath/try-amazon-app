@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:try_amazon_app/constants/global_variable.dart';
 import 'package:try_amazon_app/features/account/widget/bellow_app_bar.dart';
+import 'package:try_amazon_app/features/account/widget/orders.dart';
 import 'package:try_amazon_app/features/account/widget/top_button.dart';
 
 class AccountScreen extends StatelessWidget {
@@ -55,7 +56,9 @@ class AccountScreen extends StatelessWidget {
         children: const [
           // calling others widget
           BellowAppBar(),
-          TopButton(), 
+          TopButton(),
+          SizedBox(height: 20),
+          Orders(),
         ],
       ),
     );
