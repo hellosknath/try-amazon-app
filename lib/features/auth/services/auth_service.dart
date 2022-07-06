@@ -9,7 +9,6 @@ import 'package:try_amazon_app/common/widget/bottom_bar.dart';
 import 'package:try_amazon_app/constants/error_handling.dart';
 import 'package:try_amazon_app/constants/global_variable.dart';
 import 'package:try_amazon_app/constants/utils.dart';
-import 'package:try_amazon_app/home/screens/home_screen.dart';
 import 'package:try_amazon_app/model/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:try_amazon_app/provider/user_provider.dart';

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:try_amazon_app/common/widget/bottom_bar.dart';
 import 'package:try_amazon_app/features/auth/screens/auth_screen.dart';
-import 'package:try_amazon_app/home/screens/home_screen.dart';
+
+import 'features/home/screens/home_screen.dart';
 
 // this is dynamic page navigation systems. it's call from main.dart
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
