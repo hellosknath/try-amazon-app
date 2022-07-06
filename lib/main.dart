@@ -56,6 +56,8 @@ class _MyAppState extends State<MyApp> {
               color: Colors.black,
             )),
       ),
+      // hide banner text
+      debugShowCheckedModeBanner: false,
       // calling router class for moving page
       onGenerateRoute: (setttings) => generateRoute(setttings),
       // checking token. if token is exist then move home screen, otherwise authScreen

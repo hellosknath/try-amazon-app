@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:try_amazon_app/constants/global_variable.dart';
+import 'package:try_amazon_app/features/account/screen/account_screen.dart';
 import 'package:try_amazon_app/home/screens/home_screen.dart';
 
 class BottomBar extends StatefulWidget {
@@ -19,9 +20,7 @@ class _BottomBarState extends State<BottomBar> {
   // create list of widget of bottom bar
   List<Widget> pages = [
     const HomeScreen(),
-    const Center(
-      child: Text('Account Page'),
-    ),
+    const AccountScreen(),
     const Center(
       child: Text(
         'Cart Page',
