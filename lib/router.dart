@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:try_amazon_app/common/widget/bottom_bar.dart';
+import 'package:try_amazon_app/features/admin/screens/add_product_screen.dart';
 import 'package:try_amazon_app/features/auth/screens/auth_screen.dart';
 
 import 'features/home/screens/home_screen.dart';
@@ -23,6 +24,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const BottomBar(),
+      );
+      case AddProductScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const AddProductScreen(),
       );
     default:
       // there is no page, then showing this
