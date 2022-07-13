@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:try_amazon_app/provider/user_provider.dart';
+import 'package:try_amazon_app/features/home/widget/address_box.dart';
+import 'package:try_amazon_app/features/home/widget/carousel_image.dart';
+import 'package:try_amazon_app/features/home/widget/deal_of_day.dart';
+import 'package:try_amazon_app/features/home/widget/top_categories.dart';
 import '../../../constants/global_variable.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,9 +18,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    // getting saved user data from provider
-    final user = Provider.of<UserProvider>(context).user;
-
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
@@ -98,12 +97,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           )),
-      body: Center(
-        child: Text(
-          user.toJson(),
-          style: const TextStyle(
-            color: Colors.red,
-          ),
+      // SingleChildScrollView for scrolling top  to bottom
+      body: SingleChildScrollView(
+        child: Column(
+          children: const [
+            AddressBox(),
+            SizedBox(height: 10),
+            TopCategories(),
+            SizedBox(height: 10),
+            CarouselImage(),
+            DealOfDay(),
+          ],
         ),
       ),
     );
