@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const adminRouter = require("./route/admin");
 // import from others file
 const authRouter = require("./route/auth");
 const PORT = 3000;
@@ -10,6 +11,7 @@ const DB = "mongodb+srv://srinath:cox.srinath@cluster0.bmuct.mongodb.net/?retryW
 app.use(express.json());
 // middleware
 app.use(authRouter);
+app.use(adminRouter);
 
 
 // connection database
