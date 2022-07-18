@@ -3,6 +3,7 @@ import 'package:try_amazon_app/common/widget/bottom_bar.dart';
 import 'package:try_amazon_app/features/admin/screens/add_product_screen.dart';
 import 'package:try_amazon_app/features/auth/screens/auth_screen.dart';
 import 'package:try_amazon_app/features/home/screens/category_deals_screen.dart';
+import 'package:try_amazon_app/features/search/screens/search_screen.dart';
 
 import 'features/home/screens/home_screen.dart';
 
@@ -36,6 +37,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => CategoryDealsScreen(category: category),
+      );
+    case SearchScreen.routeName:
+      var searchQuery = routeSettings.arguments as String;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => SearchScreen(
+          searchQuery: searchQuery,
+        ),
       );
     default:
       // there is no page, then showing this

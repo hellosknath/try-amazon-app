@@ -9,16 +9,16 @@ import 'package:try_amazon_app/model/product.dart';
 import 'package:try_amazon_app/provider/user_provider.dart';
 import 'package:http/http.dart' as http;
 
-class HomeServices {
-  Future<List<Product>> fetchCategoryProduct({
+class SearchServices {
+  Future<List<Product>> fetchSearchProduct({
     required BuildContext context,
-    required String category,
+    required String searchQuery,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     List<Product> productList = [];
     try {
       http.Response res = await http.get(
-        Uri.parse('$uri/api/products?category=$category'),
+        Uri.parse('$uri/api/products/search/$searchQuery'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,

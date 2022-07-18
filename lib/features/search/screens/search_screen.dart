@@ -1,22 +1,40 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:try_amazon_app/common/widget/loader.dart';
+import 'package:try_amazon_app/constants/global_variable.dart';
 import 'package:try_amazon_app/features/home/widget/address_box.dart';
-import 'package:try_amazon_app/features/home/widget/carousel_image.dart';
-import 'package:try_amazon_app/features/home/widget/deal_of_day.dart';
-import 'package:try_amazon_app/features/home/widget/top_categories.dart';
-import 'package:try_amazon_app/features/search/screens/search_screen.dart';
-import '../../../constants/global_variable.dart';
+import 'package:try_amazon_app/features/search/services/search_services.dart';
+import 'package:try_amazon_app/features/search/widget/search_product.dart';
+import 'package:try_amazon_app/model/product.dart';
 
-class HomeScreen extends StatefulWidget {
-  // route name
-  static const String routeName = '/home';
-
-  const HomeScreen({Key? key}) : super(key: key);
+class SearchScreen extends StatefulWidget {
+  static const String routeName = '/search-screen';
+  final String searchQuery;
+  const SearchScreen({
+    Key? key,
+    required this.searchQuery,
+  }) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _SearchScreenState extends State<SearchScreen> {
+  List<Product>? productList;
+  final SearchServices searchServices = SearchServices();
+
+  @override
+  void initState() {
+    fetchSearchProducts();
+    super.initState();
+  }
+
+  void fetchSearchProducts() async {
+    productList = await searchServices.fetchSearchProduct(
+        context: context, searchQuery: widget.searchQuery);
+    setState(() {});
+  }
+
   void navigateToSearchScreen(String query) {
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
@@ -104,19 +122,25 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           )),
-      // SingleChildScrollView for scrolling top  to bottom
-      body: SingleChildScrollView(
-        child: Column(
-          children: const [
-            AddressBox(),
-            SizedBox(height: 10),
-            TopCategories(),
-            SizedBox(height: 10),
-            CarouselImage(),
-            DealOfDay(),
-          ],
-        ),
-      ),
+      body: productList == null
+          ? const Loader()
+          : Column(
+              children: [
+                const AddressBox(),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: productList!.length,
+                    itemBuilder: ((context, index) {
+                      return SearchedProducts(
+                        products: productList![index],
+                      );
+                    }),
+                  ),
+                ),
+                // ! https://youtu.be/O3nmP-lZAdg 7 hour
+              ],
+            ),
     );
   }
 }
