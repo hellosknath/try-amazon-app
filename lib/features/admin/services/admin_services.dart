@@ -86,12 +86,45 @@ class AdminServices {
               ),
             );
           }
+          print(productList[0].description);
         },
       );
     } catch (e) {
       showSnackBar(context, e.toString());
-      print(e.toString());
     }
     return productList;
+  }
+
+  // delete product
+  void deleteProduct({
+    required BuildContext context,
+    required Product product,
+    required VoidCallback onSuccess,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response res = await http.post(
+        Uri.parse(
+          '$uri/admin/delete-product',
+        ),
+        headers: {
+          'Content-Type': 'application/json; char=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode(
+          {'id': product.id},
+        ),
+      );
+
+      httpErrorHandling(
+        response: res,
+        context: context,
+        onSuccess: () {
+          onSuccess();
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
   }
 }
