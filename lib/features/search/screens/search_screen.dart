@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:try_amazon_app/common/widget/loader.dart';
 import 'package:try_amazon_app/constants/global_variable.dart';
 import 'package:try_amazon_app/features/home/widget/address_box.dart';
+import 'package:try_amazon_app/features/product_details/screens/product_details_screen.dart';
 import 'package:try_amazon_app/features/search/services/search_services.dart';
 import 'package:try_amazon_app/features/search/widget/search_product.dart';
 import 'package:try_amazon_app/model/product.dart';
@@ -132,13 +133,19 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: ListView.builder(
                     itemCount: productList!.length,
                     itemBuilder: ((context, index) {
-                      return SearchedProducts(
-                        products: productList![index],
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, ProductDetailsScreen.routeName,
+                              arguments: productList![index]);
+                        },
+                        child: SearchedProducts(
+                          products: productList![index],
+                        ),
                       );
                     }),
                   ),
                 ),
-                // ! https://youtu.be/O3nmP-lZAdg 7 hour
               ],
             ),
     );
