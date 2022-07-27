@@ -13,6 +13,15 @@ class SearchedProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double totalRating = 0;
+    double avgRating = 0;
+    for (var i = 0; i < products.rating!.length; i++) {
+      totalRating += products.rating![i].rating;
+    }
+    if (totalRating != 0) {
+      avgRating = totalRating / products.rating!.length;
+    }
+
     return Column(
       children: [
         Container(
@@ -21,7 +30,7 @@ class SearchedProducts extends StatelessWidget {
             children: [
               Image.network(
                 products.images[0],
-                fit: BoxFit.fitWidth,
+                fit: BoxFit.contain,
                 height: 135,
                 width: 135,
               ),
@@ -39,7 +48,7 @@ class SearchedProducts extends StatelessWidget {
                   Container(
                     width: 200,
                     padding: const EdgeInsets.only(left: 10, top: 5),
-                    child: const Stars(rating: 4),
+                    child: Stars(rating: avgRating),
                   ),
                   Container(
                     width: 200,

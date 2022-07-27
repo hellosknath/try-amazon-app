@@ -42,4 +42,42 @@ class HomeServices {
     }
     return productList;
   }
+
+  // fetch deal of day
+  Future<Product> fetchDealOfDay({
+    required BuildContext context,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    Product product = Product(
+      name: '',
+      description: '',
+      category: '',
+      quantity: 0,
+      price: 0,
+      images: [],
+    );
+
+    try {
+      http.Response res = await http.get(
+        Uri.parse('$uri/api/deal-of-day'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
+
+      httpErrorHandling(
+        response: res,
+        context: context,
+        onSuccess: () {
+          product = Product.fromJson(res.body);
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+
+    return product;
+  }
 }
